@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package banner;
+option go_package = "gobannercircle/internal/service/api";
+
+import "google/protobuf/empty.proto";
+
+message SlotConfigRequest {
+    int64 slot_id = 1;
+    int64 banner_id = 2;
+}
+
+message SuccessRequest {
+    int64 slot_id = 1;
+    int64 banner_id = 2;
+    int64 group_id = 3;
+}
+
+message BannerRequest {
+    int64 slot_id = 1;
+    int64 group_id = 2;
+}
+
+message BannerResponse {
+    int64 banner_id = 1;
+}
+
+service BannerRotation {
+    rpc AddBanner(SlotConfigRequest) returns (google.protobuf.Empty);
+    rpc RemoveBanner(SlotConfigRequest) returns (google.protobuf.Empty);
+    rpc Find(BannerRequest) returns (BannerResponse);
+    rpc Success(SuccessRequest) returns (google.protobuf.Empty);
+}

@@ -38,11 +38,11 @@ func easyjson4086215fDecodeGithubComTrb1makerGobannercircleInternalNotify(in *jl
 		switch key {
 		case "type":
 			out.Type = string(in.String())
-		case "slot_id":
+		case "slotId":
 			out.SlotID = int(in.Int())
-		case "banner_id":
+		case "bannerId":
 			out.BannerID = int(in.Int())
-		case "group_id":
+		case "groupId":
 			out.GroupID = int(in.Int())
 		case "time":
 			if data := in.Raw(); in.Ok() {
@@ -68,17 +68,17 @@ func easyjson4086215fEncodeGithubComTrb1makerGobannercircleInternalNotify(out *j
 		out.String(string(in.Type))
 	}
 	{
-		const prefix string = ",\"slot_id\":"
+		const prefix string = ",\"slotId\":"
 		out.RawString(prefix)
 		out.Int(int(in.SlotID))
 	}
 	{
-		const prefix string = ",\"banner_id\":"
+		const prefix string = ",\"bannerId\":"
 		out.RawString(prefix)
 		out.Int(int(in.BannerID))
 	}
 	{
-		const prefix string = ",\"group_id\":"
+		const prefix string = ",\"groupId\":"
 		out.RawString(prefix)
 		out.Int(int(in.GroupID))
 	}
