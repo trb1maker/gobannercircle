@@ -12,3 +12,6 @@ test:
 
 build-app:
 	@go build -o bin/service main.go
+
+test-logic:
+	@go test -tags=logic -timeout=5m ./internal/app/logic_test.go
