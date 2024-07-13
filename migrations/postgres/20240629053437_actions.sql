@@ -1,6 +1,6 @@
 -- +goose Up
 -- +goose StatementBegin
-create table if not exists actions (
+create table if not exists app.actions (
     id        serial  primary key,
     slot_id   integer not null references slots(slot_id) on delete cascade,
     banner_id integer not null references banners(banner_id) on delete cascade,
@@ -14,5 +14,5 @@ create table if not exists actions (
 
 -- +goose Down
 -- +goose StatementBegin
-drop table if exists actions;
+drop table if exists app.actions;
 -- +goose StatementEnd

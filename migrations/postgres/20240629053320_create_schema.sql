@@ -1,9 +1,9 @@
 -- +goose Up
 -- +goose StatementBegin
-create index if not exists slot_group_idx on app.actions(slot_id, group_id);
+create schema if not exists app;
 -- +goose StatementEnd
 
 -- +goose Down
 -- +goose StatementBegin
-drop index if exists slot_group_idx;
+drop schema if exists app;
 -- +goose StatementEnd
