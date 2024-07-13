@@ -27,3 +27,6 @@ go.work.sum
 
 # Logic test artifact
 db/implementation.sqlite
+
+# Environment
+.env

@@ -1,6 +1,6 @@
 -- +goose Up
 -- +goose StatementBegin
-create table if not exists banners (
+create table if not exists app.banners (
     banner_id   integer primary key,
     description text
 );
@@ -8,5 +8,5 @@ create table if not exists banners (
 
 -- +goose Down
 -- +goose StatementBegin
-drop table if exists banners;
+drop table if exists app.banners;
 -- +goose StatementEnd

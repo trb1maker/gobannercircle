@@ -1,6 +1,6 @@
 -- +goose Up
 -- +goose StatementBegin
-create table if not exists slots (
+create table if not exists app.slots (
     slot_id     serial primary key,
     description text
 );
@@ -8,5 +8,5 @@ create table if not exists slots (
 
 -- +goose Down
 -- +goose StatementBegin
-drop table if exists slots;
+drop table if exists app.slots;
 -- +goose StatementEnd
