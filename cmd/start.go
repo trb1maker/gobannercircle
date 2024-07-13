@@ -63,8 +63,8 @@ func runService(ctx context.Context) int {
 
 	logic := service.NewService(
 		app.NewApp(storage, notifier),
-		viper.GetString("service.host"),
-		viper.GetUint16("service.port"),
+		viper.GetString("app.host"),
+		viper.GetUint16("app.port"),
 	)
 
 	go func() {
