@@ -1,14 +1,16 @@
 storage:
-  host: 192.168.0.103
+  host: db
   port: 5432
   dbname: app
   user: app
   password: app
-logger:
-  host: 192.168.0.103
+notify:
+  host: notify
   port: 9092
   topic: banner
   partition: 0
 service:
   host: 0.0.0.0
   port: 8088
+logger:
+  level: debug

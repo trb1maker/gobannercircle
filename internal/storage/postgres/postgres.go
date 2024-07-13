@@ -37,7 +37,7 @@ func (s *Storage) BannerOn(ctx context.Context, slotID, bannerID int) error {
 	defer tx.Rollback()
 
 	_, err = tx.ExecEx(ctx, `
-		insert into actions (slot_id, banner_id, group_id)
+		insert into app.actions (slot_id, banner_id, group_id)
 		select
 			$1 slot_id,
 			$2 banner_id,
@@ -60,7 +60,7 @@ func (s *Storage) BannerOff(ctx context.Context, slotID, bannerID int) error {
 	defer tx.Rollback()
 
 	_, err = tx.ExecEx(ctx, `
-		delete from actions
+		delete from app.actions
 		where slot_id = $1 and banner_id = $2
 	`, nil, slotID, bannerID)
 	if err != nil {
@@ -78,7 +78,7 @@ func (s *Storage) Stats(ctx context.Context, slotID, groupID int) (storage.Stats
 			banner_id,
 			views,
 			clicks
-		from actions
+		from app.actions
 		where slot_id = $1 and group_id = $2
 	`, nil, slotID, groupID)
 	if err != nil {
@@ -109,7 +109,7 @@ func (s *Storage) Banner(ctx context.Context, slotID, groupID int) (int, error) 
 		select
 			banner_id,
 			avg(clicks * 1.0 / views) over() + sqrt(2 * ln(sum(views) over()) / views) weight
-		from actions
+		from app.actions
 		where slot_id = $1 and group_id = $2
 		order by weight desc
 		limit 1
@@ -134,7 +134,7 @@ func (s *Storage) CountView(ctx context.Context, slotID, bannerID, groupID int) 
 	defer tx.Rollback()
 
 	_, err = tx.ExecEx(ctx, `
-		update actions set views = views + 1
+		update app.actions set views = views + 1
 		where slot_id = $1 and banner_id = $2 and group_id = $3
 	`, nil, slotID, bannerID, groupID)
 	if err != nil {
@@ -152,7 +152,7 @@ func (s *Storage) CountClick(ctx context.Context, slotID, bannerID, groupID int)
 	defer tx.Rollback()
 
 	_, err = tx.ExecEx(ctx, `
-		update actions set clicks = clicks + 1
+		update app.actions set clicks = clicks + 1
 		where slot_id = $1 and banner_id = $2 and group_id = $3
 	`, nil, slotID, bannerID, groupID)
 	if err != nil {
