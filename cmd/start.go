@@ -28,7 +28,7 @@ func init() {
 }
 
 func runService(ctx context.Context) int {
-	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt, os.Kill)
+	ctx, cancel := signal.NotifyContext(ctx, os.Interrupt, os.Kill)
 	defer cancel()
 
 	storage, err := postgres.NewPostgresStorage(
