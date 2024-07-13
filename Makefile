@@ -15,3 +15,12 @@ build-app:
 
 test-logic:
 	@go test -tags=logic -timeout=5m ./internal/app/logic_test.go
+
+build-container:
+	@docker build -t service:dev -f build/Dockerfile .
+
+up:
+	@docker compose -f deploy/docker-compose.yaml up -d
+
+down:
+	@docker compose -f deploy/docker-compose.yaml down
