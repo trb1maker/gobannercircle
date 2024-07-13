@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"fmt"
-	"log/slog"
 	"os"
 
 	"github.com/spf13/cobra"
@@ -44,26 +43,23 @@ func initConfig() {
 		viper.SetConfigName("config")
 	}
 
-	viper.AutomaticEnv()
+	viper.BindEnv("storage.host", "STORAGE_HOST")
+	viper.BindEnv("storage.port", "STORAGE_PORT")
+	viper.BindEnv("storage.dbname", "STORAGE_DBNAME")
+	viper.BindEnv("storage.user", "STORAGE_USER")
+	viper.BindEnv("storage.password", "STORAGE_PASSWORD")
+
+	viper.BindEnv("notify.host", "NOTIFY_HOST")
+	viper.BindEnv("notify.port", "NOTIFY_PORT")
+	viper.BindEnv("notify.topic", "NOTIFY_TOPIC")
+	viper.BindEnv("notify.partition", "NOTIFY_PARTITION")
+
+	viper.BindEnv("app.host", "APP_HOST")
+	viper.BindEnv("app.port", "APP_PORT")
+
+	viper.BindEnv("logger.level", "LOGGER_LEVEL")
 
 	if err := viper.ReadInConfig(); err == nil {
 		fmt.Fprintln(os.Stderr, "Using config file:", viper.ConfigFileUsed())
 	}
-
-	var logLevel slog.Level
-	switch viper.GetString("logger.level") {
-	case "debug":
-		logLevel = slog.LevelDebug
-	case "warn":
-		logLevel = slog.LevelWarn
-	case "info":
-		logLevel = slog.LevelInfo
-	default:
-		logLevel = slog.LevelError
-	}
-
-	slog.SetDefault(slog.New(slog.NewTextHandler(
-		os.Stdout,
-		&slog.HandlerOptions{Level: logLevel},
-	)))
 }
