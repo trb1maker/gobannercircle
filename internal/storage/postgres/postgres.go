@@ -30,13 +30,7 @@ func (s *Storage) Connect(ctx context.Context) error {
 }
 
 func (s *Storage) BannerOn(ctx context.Context, slotID, bannerID int) error {
-	tx, err := s.db.BeginEx(ctx, nil)
-	if err != nil {
-		return err
-	}
-	defer tx.Rollback()
-
-	_, err = tx.ExecEx(ctx, `
+	_, err := s.db.ExecEx(ctx, `
 		insert into app.actions (slot_id, banner_id, group_id)
 		select
 			$1 slot_id,
@@ -49,7 +43,7 @@ func (s *Storage) BannerOn(ctx context.Context, slotID, bannerID int) error {
 		return err
 	}
 
-	return tx.Commit()
+	return nil
 }
 
 func (s *Storage) BannerOff(ctx context.Context, slotID, bannerID int) error {
