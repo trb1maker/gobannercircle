@@ -51,7 +51,7 @@ func TestBanner(t *testing.T) {
 
 	store := mocks.NewStorage(t)
 	store.On("Stats", mock.Anything, 1, 1).Return(stats, nil)
-	store.On("CountView", mock.Anything, 1, 1, 1).Return(nil)
+	store.On("IncViewCount", mock.Anything, 1, 1, 1).Return(nil)
 
 	ntf := mocks.NewNotifier(t)
 	ntf.On("Notify", mock.Anything, mock.Anything).Return(nil)
