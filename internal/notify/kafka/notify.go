@@ -42,7 +42,9 @@ func (n *Notify) Notify(_ context.Context, message notify.Message) error {
 		return err
 	}
 
-	if _, err := n.conn.Write(data); err != nil {
+	if _, err := n.conn.WriteMessages(kafka.Message{
+		Value: data,
+	}); err != nil {
 		return err
 	}
 
