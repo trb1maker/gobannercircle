@@ -21,8 +21,8 @@ type Storage interface {
 	BannerOn(ctx context.Context, slotID, bannerID int) error
 	BannerOff(ctx context.Context, slotID, bannerID int) error
 	Stats(ctx context.Context, slotID, groupID int) (storage.Stats, error)
-	CountView(ctx context.Context, slotID, bannerID, groupID int) error
-	CountClick(ctx context.Context, slotID, bannerID, groupID int) error
+	IncViewCount(ctx context.Context, slotID, bannerID, groupID int) error
+	IncClickCount(ctx context.Context, slotID, bannerID, groupID int) error
 }
 
 type Notifier interface {
@@ -64,7 +64,7 @@ func (a *App) Banner(ctx context.Context, slotID, groupID int) (bannerID int, er
 	sort.Stable(stats)
 	bannerID = stats[len(stats)-1].ID
 
-	if err := a.storage.CountView(ctx, slotID, bannerID, groupID); err != nil {
+	if err := a.storage.IncViewCount(ctx, slotID, bannerID, groupID); err != nil {
 		return 0, err
 	}
 
@@ -82,7 +82,7 @@ func (a *App) Banner(ctx context.Context, slotID, groupID int) (bannerID int, er
 }
 
 func (a *App) Click(ctx context.Context, slotID, bannerID, groupID int) error {
-	if err := a.storage.CountClick(ctx, slotID, bannerID, groupID); err != nil {
+	if err := a.storage.IncClickCount(ctx, slotID, bannerID, groupID); err != nil {
 		return err
 	}
 

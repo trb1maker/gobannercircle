@@ -50,12 +50,12 @@ func (_m *Storage) BannerOn(ctx context.Context, slotID int, bannerID int) error
 	return r0
 }
 
-// CountClick provides a mock function with given fields: ctx, slotID, bannerID, groupID
-func (_m *Storage) CountClick(ctx context.Context, slotID int, bannerID int, groupID int) error {
+// IncClickCount provides a mock function with given fields: ctx, slotID, bannerID, groupID
+func (_m *Storage) IncClickCount(ctx context.Context, slotID int, bannerID int, groupID int) error {
 	ret := _m.Called(ctx, slotID, bannerID, groupID)
 
 	if len(ret) == 0 {
-		panic("no return value specified for CountClick")
+		panic("no return value specified for IncClickCount")
 	}
 
 	var r0 error
@@ -68,12 +68,12 @@ func (_m *Storage) CountClick(ctx context.Context, slotID int, bannerID int, gro
 	return r0
 }
 
-// CountView provides a mock function with given fields: ctx, slotID, bannerID, groupID
-func (_m *Storage) CountView(ctx context.Context, slotID int, bannerID int, groupID int) error {
+// IncViewCount provides a mock function with given fields: ctx, slotID, bannerID, groupID
+func (_m *Storage) IncViewCount(ctx context.Context, slotID int, bannerID int, groupID int) error {
 	ret := _m.Called(ctx, slotID, bannerID, groupID)
 
 	if len(ret) == 0 {
-		panic("no return value specified for CountView")
+		panic("no return value specified for IncViewCount")
 	}
 
 	var r0 error

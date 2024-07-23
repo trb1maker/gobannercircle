@@ -120,7 +120,7 @@ func (s *Storage) Banner(ctx context.Context, slotID, groupID int) (int, error) 
 	return bannerID, nil
 }
 
-func (s *Storage) CountView(ctx context.Context, slotID, bannerID, groupID int) error {
+func (s *Storage) IncViewCount(ctx context.Context, slotID, bannerID, groupID int) error {
 	tx, err := s.db.BeginEx(ctx, nil)
 	if err != nil {
 		return err
@@ -138,7 +138,7 @@ func (s *Storage) CountView(ctx context.Context, slotID, bannerID, groupID int) 
 	return tx.Commit()
 }
 
-func (s *Storage) CountClick(ctx context.Context, slotID, bannerID, groupID int) error {
+func (s *Storage) IncClickCount(ctx context.Context, slotID, bannerID, groupID int) error {
 	tx, err := s.db.BeginEx(ctx, nil)
 	if err != nil {
 		return err
