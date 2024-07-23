@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"fmt"
+	"log/slog"
 	"os"
 
 	"github.com/spf13/cobra"
@@ -62,4 +63,19 @@ func initConfig() {
 	if err := viper.ReadInConfig(); err == nil {
 		fmt.Fprintln(os.Stderr, "Using config file:", viper.ConfigFileUsed())
 	}
+
+	var l slog.Leveler
+	switch viper.GetString("logger.level") {
+	case "debug":
+		l = slog.LevelDebug
+	case "error":
+		l = slog.LevelError
+	default:
+		l = slog.LevelInfo
+	}
+
+	slog.SetDefault(slog.New(slog.NewTextHandler(
+		os.Stdout,
+		&slog.HandlerOptions{Level: l},
+	)))
 }
