@@ -87,7 +87,7 @@ func (a *App) Click(ctx context.Context, slotID, bannerID, groupID int) error {
 	}
 
 	if err := a.notifier.Notify(ctx, notify.Message{
-		Type:     "view",
+		Type:     "click",
 		SlotID:   slotID,
 		BannerID: bannerID,
 		GroupID:  groupID,
