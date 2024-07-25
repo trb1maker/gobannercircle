@@ -1,5 +1,3 @@
-include .env
-
 generate-api:
 	@go generate ./...
 
@@ -20,28 +18,6 @@ test-logic:
 
 build-container:
 	@docker build -t service:dev -f build/Dockerfile .
-
-run: build-app
-	@STORAGE_HOST=${STORAGE_HOST} \
-	STORAGE_PORT=${STORAGE_PORT} \
-	STORAGE_DBNAME=${STORAGE_DBNAME} \
-	STORAGE_USER=${STORAGE_USER} \
-	STORAGE_PASSWORD=${STORAGE_PASSWORD} \
-	./bin/service migrate
-
-	@STORAGE_HOST=${STORAGE_HOST} \
-	STORAGE_PORT=${STORAGE_PORT} \
-	STORAGE_DB=${STORAGE_DB} \
-	STORAGE_USER=${STORAGE_USER} \
-	STORAGE_PASSWORD=${STORAGE_PASSWORD} \
-	NOTIFY_HOST=${NOTIFY_HOST} \
-	NOTIFY_PORT=${NOTIFY_PORT} \
-	NOTIFY_TOPIC=${NOTIFY_TOPIC} \
-	NOTIFY_PARTITION=${NOTIFY_PARTITION} \
-	APP_HOST=${APP_HOST} \
-	APP_PORT=${APP_PORT} \
-	LOGGER_LEVEL=${LOGGER_LEVEL} \
-	./bin/service start
 
 up:
 	@docker compose -f deploy/docker-compose.yaml up -d
