@@ -55,10 +55,7 @@ func runService(ctx context.Context) int {
 		viper.GetString("notify.topic"),
 		viper.GetInt("notify.partition"),
 	)
-	if err = notifier.Connect(ctx); err != nil {
-		slog.Error("can't connect to kafka", "err", err)
-		return failCode
-	}
+	notifier.Connect()
 	defer notifier.Close()
 
 	logic := service.NewService(

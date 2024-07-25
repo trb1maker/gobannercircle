@@ -19,38 +19,31 @@ func NewKafkaNotify(host string, port int, topic string, partition int) *Notify 
 }
 
 type Notify struct {
-	conn      *kafka.Conn
+	wr        *kafka.Writer
 	addr      string
 	topic     string
 	partition int
 }
 
-func (n *Notify) Connect(ctx context.Context) error {
-	var err error
-
-	n.conn, err = kafka.DialLeader(ctx, "tcp", n.addr, n.topic, n.partition)
-	if err != nil {
-		return err
-	}
-
-	return nil
+func (n *Notify) Connect() {
+	n.wr = kafka.NewWriter(kafka.WriterConfig{
+		Brokers:  []string{n.addr},
+		Topic:    n.topic,
+		Balancer: &kafka.LeastBytes{},
+	})
 }
 
-func (n *Notify) Notify(_ context.Context, message notify.Message) error {
+func (n *Notify) Notify(ctx context.Context, message notify.Message) error {
 	data, err := easyjson.Marshal(message)
 	if err != nil {
 		return err
 	}
 
-	if _, err := n.conn.WriteMessages(kafka.Message{
+	return n.wr.WriteMessages(ctx, kafka.Message{
 		Value: data,
-	}); err != nil {
-		return err
-	}
-
-	return nil
+	})
 }
 
 func (n *Notify) Close() error {
-	return n.conn.Close()
+	return n.wr.Close()
 }
