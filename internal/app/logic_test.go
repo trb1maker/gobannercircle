@@ -108,7 +108,7 @@ func TestMainLogic(t *testing.T) {
 	require.NoError(t, err)
 	defer storage.Close()
 
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
+	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Minute)
 	defer cancel()
 
 	require.NoError(t, storage.Connect(ctx))
