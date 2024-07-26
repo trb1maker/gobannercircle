@@ -1,7 +1,7 @@
 -- +goose Up
 -- +goose StatementBegin
 create table if not exists app.banners (
-    banner_id   integer primary key,
+    banner_id   serial primary key,
     description text
 );
 -- +goose StatementEnd

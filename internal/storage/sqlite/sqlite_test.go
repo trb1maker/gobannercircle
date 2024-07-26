@@ -142,7 +142,7 @@ func (s *sqliteSuite) Count() {
 	`, slotID, bannerID)
 	s.Require().NoError(err)
 
-	s.Require().NoError(s.storage.CountView(ctx, slotID, bannerID, groupID))
+	s.Require().NoError(s.storage.IncViewCount(ctx, slotID, bannerID, groupID))
 
 	row := s.db.QueryRowContext(ctx, `
 		select
@@ -155,7 +155,7 @@ func (s *sqliteSuite) Count() {
 	s.Require().NoError(row.Scan(&count))
 	s.Require().Equal(2, count)
 
-	s.Require().NoError(s.storage.CountClick(ctx, slotID, bannerID, groupID))
+	s.Require().NoError(s.storage.IncClickCount(ctx, slotID, bannerID, groupID))
 
 	row = s.db.QueryRowContext(ctx, `
 		select

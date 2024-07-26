@@ -25,15 +25,9 @@ type Notify struct {
 	partition int
 }
 
-func (n *Notify) Connect(ctx context.Context) error {
-	var err error
-
+func (n *Notify) Connect(ctx context.Context) (err error) {
 	n.conn, err = kafka.DialLeader(ctx, "tcp", n.addr, n.topic, n.partition)
-	if err != nil {
-		return err
-	}
-
-	return nil
+	return err
 }
 
 func (n *Notify) Notify(_ context.Context, message notify.Message) error {
@@ -42,11 +36,10 @@ func (n *Notify) Notify(_ context.Context, message notify.Message) error {
 		return err
 	}
 
-	if _, err := n.conn.Write(data); err != nil {
-		return err
-	}
-
-	return nil
+	_, err = n.conn.WriteMessages(kafka.Message{
+		Value: data,
+	})
+	return err
 }
 
 func (n *Notify) Close() error {
