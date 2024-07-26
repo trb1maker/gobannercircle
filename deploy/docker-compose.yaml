@@ -31,6 +31,7 @@ services:
       - bannercircle
     ports:
       - 9092:9092
+    restart: always
 
   migrations:
     image: service:dev

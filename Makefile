@@ -24,3 +24,6 @@ up:
 
 down:
 	@docker compose -f deploy/docker-compose.yaml down
+
+test-integration:
+	@go test -tags=integration -timeout=20m ./integration/integration_test.go

@@ -2,6 +2,7 @@ package app
 
 import (
 	"context"
+	"log/slog"
 	"math"
 	"sort"
 	"time"
@@ -75,7 +76,8 @@ func (a *App) Banner(ctx context.Context, slotID, groupID int) (bannerID int, er
 		GroupID:  groupID,
 		Time:     time.Now(),
 	}); err != nil {
-		return 0, err
+		// Об ошибках логгирования только уведомляю, это не влияет на основной функционал
+		slog.Error("notify error", "err", err)
 	}
 
 	return bannerID, nil
@@ -93,7 +95,8 @@ func (a *App) Click(ctx context.Context, slotID, bannerID, groupID int) error {
 		GroupID:  groupID,
 		Time:     time.Now(),
 	}); err != nil {
-		return err
+		// Об ошибках логгирования только уведомляю, это не влияет на основной функционал
+		slog.Error("notify error", "err", err)
 	}
 
 	return nil
