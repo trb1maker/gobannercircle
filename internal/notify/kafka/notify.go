@@ -30,7 +30,7 @@ func (n *Notify) Connect(ctx context.Context) (err error) {
 	return err
 }
 
-func (n *Notify) Notify(ctx context.Context, message notify.Message) error {
+func (n *Notify) Notify(_ context.Context, message notify.Message) error {
 	data, err := easyjson.Marshal(message)
 	if err != nil {
 		return err
